@@ -27,6 +27,22 @@ def create_cart(request, pk):
 	return Response(data=data, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([BasicAuthentication])
+def get_cart(request):
+	User = request.user
+	rentage = Rentage.objects.filter(user=User)
+	serializer = RentageSerializer(rentage, many=True)
+	data ={'message': 'success',
+			'data': serializer.data}
+	
+
+	
+	return Response (data=data, status=status.HTTP_200_OK)
+
+
+
 
 
 
